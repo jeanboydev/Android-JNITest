@@ -13,7 +13,7 @@ extern "C" {
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_jeanboy_demo_jnitest_NdkTest_getString
-  (JNIEnv *env, jclass type);
+  (JNIEnv *, jclass);
 
 /*
  * Class:     com_jeanboy_demo_jnitest_NdkTest
@@ -21,7 +21,7 @@ JNIEXPORT jstring JNICALL Java_com_jeanboy_demo_jnitest_NdkTest_getString
  * Signature: (II)I
  */
 JNIEXPORT jint JNICALL Java_com_jeanboy_demo_jnitest_NdkTest_doAdd
-  (JNIEnv *env, jclass type, jint param1, jint param2);
+  (JNIEnv *, jclass, jint, jint);
 
 #ifdef __cplusplus
 }
