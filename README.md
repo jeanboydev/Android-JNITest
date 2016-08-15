@@ -26,8 +26,10 @@ JNI：Java Native Interface
 ##Android Studio配置NDK
 * 1.如图所示下载LLDB+NDK并安装。  
 ![第一][1]
+
 * 2.配置安装好的NDK路径。  
 ![第二][2]
+
 * 3.配置一些快捷方式。  
 ![第三][3]  
 ```text
@@ -60,7 +62,7 @@ JNI：Java Native Interface
 	.
 	├── app/
 	│   ├── app.iml
-	│   ├── build.gradle
+	│   ├── <span style="color:red">build.gradle</span>
 	│   └── src/
 	├── build.gradle
 	├── gradle/
