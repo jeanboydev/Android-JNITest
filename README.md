@@ -173,7 +173,7 @@ JNI：Java Native Interface
 * 4.创建jni文件夹  
 ![创建jni文件夹][9]
 
-* 5.创建NdkTest.class  
+* 5.创建NdkTest.java  
 ```java
 	public class NdkTest {
 	    static {
@@ -258,8 +258,41 @@ Android.mk文件内容
 
 Application.mk文件内容  
 ```c
-	APP_MODULES := NdkTest//跟moduleName一致
-	APP_ABI := all
+	APP_MODULES := NdkTest//这个变量是可选的，如果没有定义，NDK将由在Android.mk中声明的默认的模块编译，并且包含所有的子文件(makefile文件)；如果APP_MODULES定义了，它不许是一个空格分隔的模块列表，这个模块名字被定义在Android.mk文件中的LOCAL_MODULE中。注意NDK会自动计算模块的依赖
+	APP_ABI := all//支持所有平台，也可以指定平台空格隔开armeabi armeabi-v7a x86
+```
+
+```text
+	Android系统目前支持的CPU架构：
+
+	ARMv5，ARMv7 (从2010年起)
+	x86 (从2011年起)
+	MIPS (从2012年起)
+	ARMv8，MIPS64和x86_64 (从2014年起)
+
+	每一个CPU架构对应一个ABI
+	CPU架构			ABI
+	ARMv5	--->	armeabi
+	ARMv7	--->	armeabi-v7a
+	x86		--->	x86
+	MIPS	--->	mips
+	ARMv8	--->	arm64-v8a
+	MIPS64	--->	mips64
+	x86_64	--->	x86_64
+
+	armeabi：默认选项，将创建以基于ARM* v5TE 的设备为目标的库。 具有这种目标的浮点运算使用软件浮点运算。 使用此ABI（二进制接口）创建的二进制代码将可以在所有 ARM*设备上运行。所以armeabi通用性很强。但是速度慢
+
+	armeabi-v7a：创建支持基于ARM* v7 的设备的库，并将使用硬件FPU指令。armeabi-v7a是针对有浮点运算或高级扩展功能的arm v7 cpu。
+
+	mips：MIPS是世界上很流行的一种RISC处理器。MIPS的意思是“无内部互锁流水级的微处理器”(Microprocessor without interlocked piped stages)，其机制是尽量利用软件办法避免流水线中的数据相关问题。
+
+	x86：支持基于硬件的浮点运算的IA-32 指令集。x86是可以兼容armeabi平台运行的，无论是armeabi-v7a还是armeabi，同时带来的也是性能上的损耗，另外需要指出的是，打包出的x86的so，总会比armeabi平台的体积更小。
+
+	总结
+	如果项目只包含了 armeabi，那么在所有Android设备都可以运行；
+	如果项目只包含了 armeabi-v7a，除armeabi架构的设备外都可以运行； 
+	如果项目只包含了 x86，那么armeabi架构和armeabi-v7a的Android设备是无法运行的；
+	如果同时包含了 armeabi，armeabi-v7a和x86，所有设备都可以运行，程序在运行的时候去加载不同平台对应的so，这是较为完美的一种解决方案，同时也会导致包变大。
 ```
 
 * 8.生成so文件  
