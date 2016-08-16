@@ -177,7 +177,7 @@ JNI：Java Native Interface
 ```java
 	public class NdkTest {
 	    static {
-	        System.loadLibrary("NdkTest");//这里跟上面app->build.gradle中的moduleName一致
+	        System.loadLibrary("NdkTest");//加载要使用的so文件
 	    }
 		//生命native方法
 	    public static native String getString();
@@ -251,14 +251,17 @@ Android.mk文件内容
 	LOCAL_PATH := $(call my-dir)
 	include $(CLEAR_VARS)
 	
-	LOCAL_MODULE := NdkTest//跟moduleName一致
+	LOCAL_MODULE := NdkTest//moduleName
 	LOCAL_SRC_FILES := NdkTest.cpp//上面创建的NdkTest.cpp
 	include $(BUILD_SHARED_LIBRARY)
 ```
 
 Application.mk文件内容  
 ```c
-	APP_MODULES := NdkTest//这个变量是可选的，如果没有定义，NDK将由在Android.mk中声明的默认的模块编译，并且包含所有的子文件(makefile文件)；如果APP_MODULES定义了，它不许是一个空格分隔的模块列表，这个模块名字被定义在Android.mk文件中的LOCAL_MODULE中。注意NDK会自动计算模块的依赖
+	APP_MODULES := NdkTest//这个变量是可选的，如果没有定义，NDK将由在
+	Android.mk中声明的默认的模块编译，并且包含所有的子文件(makefile文件)；
+	如果APP_MODULES定义了，它不许是一个空格分隔的模块列表，这个模块名字被定
+	义在Android.mk文件中的LOCAL_MODULE中。注意NDK会自动计算模块的依赖
 	APP_ABI := all//支持所有平台，也可以指定平台空格隔开armeabi armeabi-v7a x86
 ```
 
@@ -280,19 +283,29 @@ Application.mk文件内容
 	MIPS64	--->	mips64
 	x86_64	--->	x86_64
 
-	armeabi：默认选项，将创建以基于ARM* v5TE 的设备为目标的库。 具有这种目标的浮点运算使用软件浮点运算。 使用此ABI（二进制接口）创建的二进制代码将可以在所有 ARM*设备上运行。所以armeabi通用性很强。但是速度慢
+	armeabi：默认选项，将创建以基于ARM* v5TE 的设备为目标的库。 具有这种目标
+	的浮点运算使用软件浮点运算。 使用此ABI（二进制接口）创建的二进制代码将可以
+	在所有 ARM*设备上运行。所以armeabi通用性很强。但是速度慢
 
-	armeabi-v7a：创建支持基于ARM* v7 的设备的库，并将使用硬件FPU指令。armeabi-v7a是针对有浮点运算或高级扩展功能的arm v7 cpu。
+	armeabi-v7a：创建支持基于ARM* v7 的设备的库，并将使用硬件FPU指令。
+	armeabi-v7a是针对有浮点运算或高级扩展功能的arm v7 cpu。
 
-	mips：MIPS是世界上很流行的一种RISC处理器。MIPS的意思是“无内部互锁流水级的微处理器”(Microprocessor without interlocked piped stages)，其机制是尽量利用软件办法避免流水线中的数据相关问题。
+	mips：MIPS是世界上很流行的一种RISC处理器。MIPS的意思是“无内部互锁流水级
+	的微处理器”(Microprocessor without interlocked piped stages)，其机
+	制是尽量利用软件办法避免流水线中的数据相关问题。
 
-	x86：支持基于硬件的浮点运算的IA-32 指令集。x86是可以兼容armeabi平台运行的，无论是armeabi-v7a还是armeabi，同时带来的也是性能上的损耗，另外需要指出的是，打包出的x86的so，总会比armeabi平台的体积更小。
+	x86：支持基于硬件的浮点运算的IA-32 指令集。x86是可以兼容armeabi平台运行
+	的，无论是armeabi-v7a还是armeabi，同时带来的也是性能上的损耗，另外需要
+	指出的是，打包出的x86的so，总会比armeabi平台的体积更小。
 
 	总结
 	如果项目只包含了 armeabi，那么在所有Android设备都可以运行；
 	如果项目只包含了 armeabi-v7a，除armeabi架构的设备外都可以运行； 
-	如果项目只包含了 x86，那么armeabi架构和armeabi-v7a的Android设备是无法运行的；
-	如果同时包含了 armeabi，armeabi-v7a和x86，所有设备都可以运行，程序在运行的时候去加载不同平台对应的so，这是较为完美的一种解决方案，同时也会导致包变大。
+	如果项目只包含了 x86，那么armeabi架构和armeabi-v7a的Android设备是无法
+	运行的；
+	如果同时包含了 armeabi，armeabi-v7a和x86，所有设备都可以运行，程序在运
+	行的时候去加载不同平台对应的so，这是较为完美的一种解决方案，同时也会导致
+	包变大。
 ```
 
 * 8.生成so文件  
