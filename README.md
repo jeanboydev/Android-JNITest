@@ -69,13 +69,13 @@ JNI：Java Native Interface
 * 1.修改根目录下的build.gradle  
 ```xml
 	buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-	//	修改build:gradle为build:gradle-experimental
-        classpath "com.android.tools.build:gradle-experimental:0.7.0"
-	//        classpath 'com.android.tools.build:gradle:2.1.2'
+	    repositories {
+		jcenter()
+	    }
+	    dependencies {
+		//	修改build:gradle为build:gradle-experimental
+        	classpath "com.android.tools.build:gradle-experimental:0.7.0"
+		//        classpath 'com.android.tools.build:gradle:2.1.2'
 	    }
 	}
 	
