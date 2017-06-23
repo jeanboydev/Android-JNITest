@@ -4,7 +4,7 @@ Android Studio JNI环境配置。
 
 ------
 
-##介绍
+## 介绍
 
 Android Studio + NDK来实现JNI。
 
@@ -18,12 +18,12 @@ The NDK is a toolset that allows you to implement parts of your app using native
 JNI：Java Native Interface  
 它提供了若干的API实现了Java和其他语言的通信（主要是C&C++）。从Java1.1开始，JNI标准成为java平台的一部分，它允许Java代码和其他语言写的代码进行交互。
 
-##准备工作
+## 准备工作
 
 * 1.搭建好Android Studio开发环境。
 * 2.新建一个Android项目
 
-##Android Studio配置NDK
+## Android Studio配置NDK
 * 1.如图所示下载LLDB+NDK并安装。  
 ![第一][1]
 
@@ -55,7 +55,7 @@ JNI：Java Native Interface
 	Working directory：$ModuleFileDir$\src\main
 ```
 
-##配置项目
+## 配置项目
 * 在gradle.properties文件中添加  
 ```xml
 	android.useDeprecatedNdk=true
